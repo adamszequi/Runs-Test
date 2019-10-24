@@ -1,0 +1,45 @@
+import random 
+
+#set the variables and listnames
+countneg=0
+countpos=0
+x=[]
+indexes=[]
+
+#random sample generator to check efficacy of code
+y=random.sample(range(-1000,1000),500)
+x=y
+
+#print x to crosscheck by manually counting but hash x for large samples
+#print(x)
+
+#noticed that first number doesnt count if last 
+#number has the same sign therefore coded this to remedy it
+if x[0]>=0 and x[-1]>=0 and x[0]>=0:
+        countpos+=1
+elif x[0]<0 and x[-1]<0 and x[0]>=0:
+        countpos+=1        
+elif x[0]<0 and x[-1]<0 and x[0]<0:
+        countneg+=1 
+elif x[0]>=0 and x[-1]>=0 and x[0]<0:
+        countneg+=1         
+
+#determine negative runs
+for i in range(len(x)):
+    if x[i] <0 and x[i-1]>=0:
+        indexes.append(i)
+        #print(i)
+        countneg+=1
+print('Number of negative runs is:',countneg)
+
+#determine positive runs
+for i in range(len(x)):
+    if x[i] >=0 and x[i-1]<0:
+        indexes.append(i)
+        #print(i)
+        countpos+=1  
+print('Number of positive runs is:',countpos)
+
+#determine total runs
+Sumofbothnegandpos=countpos+countneg    
+print('Total runs is:',Sumofbothnegandpos)
