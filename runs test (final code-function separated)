@@ -1,0 +1,137 @@
+{
+ "cells": [
+  {
+   "cell_type": "code",
+   "execution_count": 166,
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Number of negatives: 8\n",
+      "Number of positives: 7\n",
+      "Total runs is: 7\n",
+      "Z value is:  -0.789753974479512\n"
+     ]
+    }
+   ],
+   "source": [
+    "def number_of_negatives(x):\n",
+    "    neg=[]\n",
+    "    for i in x:\n",
+    "        if i<0:\n",
+    "            neg.append(i)\n",
+    "    return len(neg)\n",
+    "    \n",
+    "def number_of_neg_runs(x):#determine negative runs\n",
+    "    countneg=0\n",
+    "    for i in range(len(x)):\n",
+    "        if x[i] <0 and x[i-1]>=0:\n",
+    "            countneg+=1\n",
+    "    #noticed that first number doesnt count if last \n",
+    "    #number has the same sign therefore coded this to remedy it\n",
+    "    if x[0]<0 and x[-1]<0 and x[0]<0:\n",
+    "        countneg+=1 \n",
+    "    elif x[0]>=0 and x[-1]>=0 and x[0]<0:\n",
+    "        countneg+=1  \n",
+    "    return countneg\n",
+    "\n",
+    "def number_of_pos_runs(x):#determine positive runs\n",
+    "    countpos=0\n",
+    "    for i in range(len(x)):\n",
+    "        if x[i] >=0 and x[i-1]<0:\n",
+    "            countpos+=1\n",
+    "    #noticed that first number doesnt count if last \n",
+    "    #number has the same sign therefore coded this to remedy it\n",
+    "    if x[0]>=0 and x[-1]>=0 and x[0]>=0:\n",
+    "        countpos+=1 \n",
+    "    elif x[0]<0 and x[-1]<0 and x[0]>=0:\n",
+    "        countpos+=1 \n",
+    "    return countpos\n",
+    "\n",
+    "def number_of_positives(x):\n",
+    "    pos=[]\n",
+    "    for i in x:\n",
+    "        if i>=0:\n",
+    "            pos.append(i)\n",
+    "    return len(pos)\n",
+    "        \n",
+    "\n",
+    "def total_runs(x):#determine total runs\n",
+    "    return number_of_neg_runs(x)+number_of_pos_runs(x)\n",
+    "\n",
+    "def total(x):\n",
+    "    return len(x)\n",
+    "\n",
+    "def mean(x):\n",
+    "    mu_numerator=2*(number_of_positives(x)*number_of_negatives(x))\n",
+    "    mu_denominator=total(x)\n",
+    "    return (mu_numerator/mu_denominator)+1\n",
+    "\n",
+    "def standard_error(x):\n",
+    "    import math\n",
+    "    se_numerator=(mean(x)-1)*(mean(x)-2)\n",
+    "    se_denominator=total(x)-1\n",
+    "    return math.sqrt(se_numerator/se_denominator)\n",
+    "\n",
+    "def Z_value(x):\n",
+    "    return (total_runs(x)-mean(x))/standard_error(x)\n",
+    "    \n",
+    "\n",
+    "def main():#random sample generator to check efficacy of code\n",
+    "    import random\n",
+    "    x=random.sample(range(-10,10),15)\n",
+    "    #print(x)\n",
+    "    #print(len(x))\n",
+    "    print('Number of negatives:',number_of_negatives(x))\n",
+    "    print('Number of positives:',number_of_positives(x))\n",
+    "    print('Total runs is:',total_runs(x))\n",
+    "    print('Z value is: ',Z_value(x))\n",
+    "main()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": []
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": []
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": []
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "Python 3",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.7.3"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 2
+}
